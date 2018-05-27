@@ -1,7 +1,7 @@
 package haha;
 
 //一个比赛对
-class Pair {
+public class Pair {
 int x, y;
 
 Pair(int x, int y) {

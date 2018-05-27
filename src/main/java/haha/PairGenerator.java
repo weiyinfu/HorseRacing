@@ -1,5 +1,8 @@
 package haha;
 
+import haha.Board;
+import haha.Pair;
+
 import java.util.List;
 
 /**

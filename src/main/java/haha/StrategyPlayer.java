@@ -19,21 +19,29 @@ StrategyPlayer(Pair[] tree) {
     this.tree = tree;
 }
 
-String empty(int cnt) {
-    StringBuilder builder = new StringBuilder();
-    for (int i = 0; i < cnt; i++) builder.append(' ');
-    return builder.toString();
+String tos() {
+    return fileStyle("", 1);
 }
 
-String visit(int x, int depth) {
-    if (x >= tree.length || tree[x] == null) return "";
+public String fileStyle(String prefix, int x) {
     StringBuilder builder = new StringBuilder();
-    builder.append("\n" + empty(depth) + tree[x].x + " " + tree[x].y + visit(x << 1, depth + 1) + visit(x << 1 | 1, depth + 1));
+    builder.append(prefix + tree[x].x + "," + tree[x].y).append('\n');
+    String temp = prefix.replace('┣', '┃');
+    temp = temp.replace("━", "  ");
+    temp = temp.replace("┗", "  "); //一定要注意，一个这个符号是两个空格
+    boolean left = (x << 1) < tree.length && tree[x << 1] != null;
+    boolean right = (x << 1 | 1) < tree.length && tree[x << 1 | 1] != null;
+    if (left && right) {
+        builder.append(fileStyle(temp + "┣━", x << 1));
+        builder.append(fileStyle(temp + "┗━", x << 1 | 1));
+    } else {
+        if (left) {
+            builder.append(fileStyle(temp + "┗━", x << 1));
+        } else if (right) {
+            builder.append(fileStyle(temp + "┗━", x << 1 | 1));
+        }
+    }
     return builder.toString();
-}
-
-void show() {
-    System.out.println(visit(1, 0));
 }
 
 Element createXML(int x, boolean isLeft) {

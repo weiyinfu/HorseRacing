@@ -136,13 +136,13 @@ void showStrategy(int n, int k) {
     int ans = solveOne(n, k, 0);
     System.out.println("最少步数\n" + board.screenCut() + "\n" + ans);
     Pair[] tree = traceStrategy(ans);
-    new StrategyPlayer(tree).show();
+    System.out.println(new StrategyPlayer(tree).tos());
     new Validator(n, k, tree).validate();
 }
 
 BruteForce() {
-    findRule();
-//    showStrategy(4, 4);
+//    findRule();
+    showStrategy(5, 3);
 }
 
 public static void main(String[] args) {

@@ -6,7 +6,7 @@ import java.util.List;
 /**
  * 局面类，用二维表描述拓扑图
  */
-public class Board {
+class Board {
 int N = 7, K = 3;//N匹马,选出前K名来
 char a[][] = new char[N][N];//当前局面
 int win[] = new int[N];//win[i]表示第i匹马胜了的场数,用于快速判断游戏是否结束
