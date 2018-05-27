@@ -1,3 +1,5 @@
+package haha;
+
 //一个比赛对
 class Pair {
 int x, y;
