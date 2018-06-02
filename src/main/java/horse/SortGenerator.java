@@ -1,14 +1,11 @@
-package haha;
+package horse;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 import java.util.TreeSet;
 
-/**
- * 最基本的决策产生器
- */
-public class BasePairGenerator implements PairGenerator {
+public class SortGenerator extends BasePairGenerator {
 @Override
 public List<Pair> getCompetePairs(Board board) {
     //根据局面获取比赛对,优先让高手们决战,优先让优胜者胜
@@ -25,6 +22,11 @@ public List<Pair> getCompetePairs(Board board) {
             }
         }
     }
+    pairs.sort((o1, o2) -> {
+        int one = board.win[o1.x] + board.win[o1.y];
+        int two = board.win[o2.x] + board.win[o2.y];
+        return two - one;
+    });
     return pairs;
 }
 }

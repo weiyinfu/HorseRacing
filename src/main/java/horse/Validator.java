@@ -1,4 +1,4 @@
-package haha;
+package horse;
 
 import java.util.List;
 

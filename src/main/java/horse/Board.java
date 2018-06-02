@@ -1,4 +1,4 @@
-package haha;
+package horse;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -11,6 +11,11 @@ int N = 7, K = 3;//N匹马,选出前K名来
 char a[][] = new char[N][N];//当前局面
 int win[] = new int[N];//win[i]表示第i匹马胜了的场数,用于快速判断游戏是否结束
 int lose[] = new int[N];//lose[i]表示第i匹马败了的场数，用于快速查询
+
+//棋盘局面常量
+final static int WIN = 1;
+final static int LOSE = 2;
+final static int PEACE = 0;
 
 Board(int N, int K) {
     this.N = N;
@@ -50,16 +55,16 @@ boolean isOver() {
 List<Pair> updateByCompeteResult(int winner, int loser) {
     if (a[winner][loser] != 0) return new ArrayList<>();
     List<Pair> ret = new ArrayList<>();
-    a[winner][loser] = 1;
-    a[loser][winner] = 2;
+    a[winner][loser] = WIN;
+    a[loser][winner] = LOSE;
     ret.add(new Pair(winner, loser));
     win[winner]++;
     lose[loser]++;
     for (int i = 0; i < N; i++) {
-        if ((a[loser][i] == 1)) {
+        if ((a[loser][i] == WIN)) {
             ret.addAll(updateByCompeteResult(winner, i));
         }
-        if (a[winner][i] == 2) {
+        if (a[winner][i] == LOSE) {
             ret.addAll(updateByCompeteResult(i, loser));
         }
     }
@@ -69,12 +74,13 @@ List<Pair> updateByCompeteResult(int winner, int loser) {
 //撤销对局面的更新
 void undo(List<Pair> pairs) {
     for (Pair p : pairs) {
-        a[p.x][p.y] = a[p.y][p.x] = 0;
+        a[p.x][p.y] = a[p.y][p.x] = PEACE;
         win[p.x]--;
         lose[p.y]--;
     }
 }
 
+//将局面转化为字符串
 String screenCut() {
     StringBuilder builder = new StringBuilder();
     for (int i = 0; i < N; i++) {
@@ -98,6 +104,17 @@ String screenCut() {
 //求x的哈希值:用他当前的比赛局面表示
 String hashPerson(int x) {
     return new String(a[x]);
+}
+
+//求x的哈希值，用他当前比赛局面表示
+int hashPersonInt(int x) {
+    if (N >= 16) throw new RuntimeException("hashPersonInt can only be used when N<16");
+    int code = 0;
+    for (int i = 0; i < N; i++) {
+        code |= a[x][i];
+        code <<= 2;
+    }
+    return code;
 }
 
 //求整个局面的哈希值

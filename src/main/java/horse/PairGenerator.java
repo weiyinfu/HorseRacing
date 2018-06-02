@@ -1,7 +1,4 @@
-package haha;
-
-import haha.Board;
-import haha.Pair;
+package horse;
 
 import java.util.List;
 

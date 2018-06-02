@@ -1,24 +1,26 @@
-package haha;
+package horse;
 
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 /**
+ * 程序入口类
  * 核心类，相当于评判器
  * 给定一个决策生成器，此评判器可以为决策生成器进行打分
  */
 public class BruteForce {
+//N匹马取前K名
 int N, K;
 //使用字典记录已经解决过的局面，一方面用于加速；另一方面用于回溯寻找解法
 Map<String, Integer> solved = new HashMap<>();//已经解决过得局面
 Board board;
-PairGenerator generator = new HeuristicGenerator();
+PairGenerator generator = new BasePairGenerator();
 //基本生成器，用于回溯
 BasePairGenerator simple = new BasePairGenerator();
 
 /**
- * 回溯
+ * 回溯找到策略
  */
 void traceStrategyRecursive(int x, Pair[] tree, int maxStep) {
     if (board.isOver()) return;
@@ -106,7 +108,7 @@ int minSteps(int maxStep) {
 //打表寻找规律
 void findRule() {
     long begTime = System.currentTimeMillis();
-    int n = 7;
+    int n = 9;
     for (int i = 1; i < n; i++) {
         for (int j = 1; j <= i; j++) {
             int minStep = solveOne(i, j, 100);
@@ -141,8 +143,8 @@ void showStrategy(int n, int k) {
 }
 
 BruteForce() {
-//    findRule();
-    showStrategy(5, 3);
+    findRule();
+//    showStrategy(5, 3);
 }
 
 public static void main(String[] args) {

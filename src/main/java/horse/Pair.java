@@ -1,4 +1,4 @@
-package haha;
+package horse;
 
 //一个比赛对
 public class Pair {
