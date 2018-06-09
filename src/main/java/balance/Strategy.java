@@ -4,13 +4,12 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+/**
+ * 决策，一个决策是由天平两端放哪些东西决定的
+ */
 public class Strategy {
 List<Integer> left = new ArrayList<>();
 List<Integer> right = new ArrayList<>();
-
-Strategy() {
-
-}
 
 Strategy(List<Integer> left, List<Integer> right) {
     this.left = left;

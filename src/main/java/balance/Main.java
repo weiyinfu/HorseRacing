@@ -11,23 +11,14 @@ import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
 
+/**
+ * 启发式方法寻找病球，答案不一定是最少步数
+ */
 public class Main {
 int n = 12;
 Node root = null;
 
-class Node {
-    //三种结果对应三种决策
-    Node[] sons = new Node[3];
-    List<Integer> solutions;
-    Strategy strategy;
-    int order;//排行
-
-    Node(List<Integer> solutions, int order) {
-        this.solutions = solutions;
-        this.order = order;
-    }
-}
-
+//根据当前可行解决定下一步的称量计划
 Node build(List<Integer> solutions, int order) {
     Node node = new Node(solutions, order);
     if (solutions.size() <= 1) return node;
@@ -42,55 +33,13 @@ Node build(List<Integer> solutions, int order) {
     return node;
 }
 
-NodeVisitor<Node> visitor = new NodeVisitor<Node>() {
-    @Override
-    public List<Node> getSons(Node node) {
-        return Arrays.stream(node.sons).filter(Objects::nonNull).collect(Collectors.toList());
-    }
-
-    @Override
-    public String tos(Node node) {
-        StringBuilder builder = new StringBuilder();
-        builder.append("平左右".charAt(node.order)).append(' ');
-        if (node.strategy == null) {
-            if (node.solutions.size() == 0) builder.append("error");
-            else builder.append(node.solutions.get(0));
-        } else {
-            builder.append(node.strategy).append(' ');
-            builder.append("[").append(node.solutions.size()).append("]");
-        }
-        return builder.toString();
-    }
-
-    @Override
-    public Element toElement(Node node) {
-        Element e = DocumentHelper.createElement("if");
-        e.addAttribute("result", "平左右".charAt(node.order) + "");
-        if (node.strategy == null) {
-            if (node.solutions.size() == 0) e.addAttribute("state", "error");
-            else e.addAttribute("state", node.solutions.get(0) + "");
-        } else {
-            e.addAttribute("strategy", node.strategy.toString());
-        }
-        return e;
-    }
-
-    @Override
-    public Node root() {
-        return root;
-    }
-};
-
 Main() {
     List<Integer> solutions = new ArrayList<>(n);
     for (int i = 0; i < n; i++) {
         solutions.add(i);
     }
     root = build(solutions, 0);
-    String s = TreePlayer.filestyle(visitor);
-    System.out.println(s);
-    TreePlayer.xml(visitor, "balance.xml");
-    TreePlayer.swingControl(visitor);
+    new StrategyPlayer(root);
 }
 
 public static void main(String[] args) {

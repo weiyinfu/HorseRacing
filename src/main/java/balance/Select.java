@@ -3,7 +3,7 @@ package balance;
 import java.util.ArrayList;
 import java.util.List;
 
-//从一堆int中选择k个
+//从一堆int中选择k个int，通过selectVisitor进行访问
 public class Select {
 List<Integer> f;
 int cnt;
