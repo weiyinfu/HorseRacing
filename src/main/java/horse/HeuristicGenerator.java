@@ -3,6 +3,11 @@ package horse;
 import java.util.Arrays;
 import java.util.List;
 
+/**
+ * 启发式着法生成器
+ * 首先对list&lt;pairs&gt;进行排序
+ * 然后对pair内的马进行排序，希望让能胜算大的马赢（这样能够是游戏进行足够多步，从而尽早剪枝）
+ */
 public class HeuristicGenerator extends BasePairGenerator {
 @Override
 public List<Pair> getCompetePairs(Board board) {

@@ -1,5 +1,10 @@
 package horse;
 
+import horse.StrategyPlayer;
+import org.dom4j.Element;
+import treeplayer.NodeVisitor;
+import treeplayer.TreePlayer;
+
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -138,13 +143,16 @@ void showStrategy(int n, int k) {
     int ans = solveOne(n, k, 0);
     System.out.println("最少步数\n" + board.screenCut() + "\n" + ans);
     Pair[] tree = traceStrategy(ans);
-    System.out.println(new StrategyPlayer(tree).tos());
+    StrategyPlayer p = new StrategyPlayer(tree);
+    System.out.println(p.fileStyle());
+    p.xml();
+    p.swingControl();
     new Validator(n, k, tree).validate();
 }
 
 BruteForce() {
-    findRule();
-//    showStrategy(5, 3);
+//    findRule();
+    showStrategy(5, 3);
 }
 
 public static void main(String[] args) {

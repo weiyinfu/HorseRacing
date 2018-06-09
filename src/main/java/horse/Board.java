@@ -106,13 +106,17 @@ String hashPerson(int x) {
     return new String(a[x]);
 }
 
-//求x的哈希值，用他当前比赛局面表示
+/**
+ * 求x的哈希值，用他当前比赛局面表示
+ * 局面中的每个状态可以用2bit表示（0 1 2 胜负和），只要参赛人数小于16，
+ * 那么就可以使用int 32位来表示一个人的哈希
+ */
+
 int hashPersonInt(int x) {
     if (N >= 16) throw new RuntimeException("hashPersonInt can only be used when N<16");
     int code = 0;
     for (int i = 0; i < N; i++) {
-        code |= a[x][i];
-        code <<= 2;
+        code |= a[x][i] << (i << 1);
     }
     return code;
 }
