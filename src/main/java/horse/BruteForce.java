@@ -1,10 +1,5 @@
 package horse;
 
-import horse.StrategyPlayer;
-import org.dom4j.Element;
-import treeplayer.NodeVisitor;
-import treeplayer.TreePlayer;
-
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -20,7 +15,7 @@ int N, K;
 //使用字典记录已经解决过的局面，一方面用于加速；另一方面用于回溯寻找解法
 Map<String, Integer> solved = new HashMap<>();//已经解决过得局面
 Board board;
-PairGenerator generator = new BasePairGenerator();
+PairGenerator generator = new GreedyGenerator();
 //基本生成器，用于回溯
 BasePairGenerator simple = new BasePairGenerator();
 
@@ -151,8 +146,8 @@ void showStrategy(int n, int k) {
 }
 
 BruteForce() {
-//    findRule();
-    showStrategy(5, 3);
+    findRule();
+//    showStrategy(5, 3);
 }
 
 public static void main(String[] args) {
