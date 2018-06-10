@@ -12,7 +12,10 @@ import java.util.stream.Collectors;
 
 public class StrategyPlayer {
 
-final Node root;
+Node root;
+boolean heavy = false;
+int n;
+
 NodeVisitor<Node> visitor = new NodeVisitor<Node>() {
     @Override
     public List<Node> getSons(Node node) {
@@ -25,7 +28,12 @@ NodeVisitor<Node> visitor = new NodeVisitor<Node>() {
         builder.append("平左右".charAt(node.order)).append(' ');
         if (node.strategy == null) {
             if (node.solutions.size() == 0) builder.append("error");
-            else builder.append(node.solutions.get(0));
+            else {
+                builder.append(node.solutions.get(0) % n);
+                if (!heavy) {
+                    builder.append(node.solutions.get(0) >= n ? "偏重" : "偏轻");
+                }
+            }
         } else {
             builder.append(node.strategy).append(' ');
             builder.append("[").append(node.solutions.size()).append("]");
@@ -39,7 +47,12 @@ NodeVisitor<Node> visitor = new NodeVisitor<Node>() {
         e.addAttribute("result", "平左右".charAt(node.order) + "");
         if (node.strategy == null) {
             if (node.solutions.size() == 0) e.addAttribute("state", "error");
-            else e.addAttribute("state", node.solutions.get(0) + "");
+            else {
+                e.addAttribute("state", node.solutions.get(0) % n + "");
+                if (!heavy) {
+                    e.addAttribute("type", node.solutions.get(0) >= n ? "heavy" : "light");
+                }
+            }
         } else {
             e.addAttribute("strategy", node.strategy.toString());
         }
@@ -52,8 +65,10 @@ NodeVisitor<Node> visitor = new NodeVisitor<Node>() {
     }
 };
 
-StrategyPlayer(Node root) {
+StrategyPlayer(Node root, boolean heavy, int n) {
     this.root = root;
+    this.heavy = heavy;
+    this.n = n;
     String s = TreePlayer.filestyle(visitor);
     System.out.println(s);
     TreePlayer.xml(visitor, "balance.xml");
