@@ -1,16 +1,18 @@
-package guess;
+package auc;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class Node {
 public List<Integer> solutions;
-public Node[] sons;
+public Map<Integer, Node> sons;
 public int strategy;
 public int order;//我的排名
 
-public Node(List<Integer> solutions, int N, int order) {
+public Node(List<Integer> solutions, int order) {
     this.solutions = solutions;
-    this.sons = new Node[N + 1];
+    this.sons = new HashMap<>();
     this.order = order;
 }
 }
