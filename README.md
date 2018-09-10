@@ -176,5 +176,9 @@ n个球，整个可行解空间为n，决策空间为C(n,2)×C(2,1)+C(n,4)×C(4,
 
 最多需要尝试4N次就可以找到答案。
 
+TODO:  
+* 使用随机算法检测每个决策剩余解空间
+* 使用min max(solution space)而不是mean(solution space)
+
 # 参考资料
 [zhihu](https://www.zhihu.com/question/19856916)
